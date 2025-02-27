@@ -1,0 +1,125 @@
+{{ 'brands.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.4 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.4 | round: 0 }}px;
+  }
+
+  .section-{{ section.id }} {
+    margin-top: {{ section.settings.margin_top | times: 0.4 | round: 0 }}px;
+    margin-bottom: {{ section.settings.margin_bottom | times: 0.4 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .section-{{ section.id }} {
+      margin-top: {{ section.settings.margin_top}}px;
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section
+  class="brand-section section-{{ section.id }}"
+  style="background-color: {{ section.settings.background_color }};"
+>
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="section-title">
+      <h2 class=" text-center">{{ section.settings['title-7'] }}</h2>
+    </div>
+    <div class="row">
+      {% for block in section.blocks %}
+        <div class="col-md-3">
+          <div class="brand-section-wrapper">
+            {{ block.settings.brands | image_url: width: 269 | image_tag: class: 'img-fluid' }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Brands",
+  "settings": [
+    {
+      "type": "html",
+      "id": "title-7",
+      "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin And Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "transparent"
+    }
+  ],
+   "blocks": [
+    {
+      "type": "image",
+      "name": "Brands block",
+      "settings": [
+         {
+          "type": "image_picker",
+          "id": "brands",
+          "label": "Brands Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands"
+    }
+  ]
+}
+{% endschema %}
